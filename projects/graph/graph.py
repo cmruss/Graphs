@@ -136,11 +136,11 @@ class Graph:
         
         while s.size() > 0:
             path = s.pop()
-            print(path)
+            # print(path)
             v = path[-1]
             
             if v not in visited:
-                print(v)
+                # print(v)
                 if v == destination_vertex:
                     return path
             visited.add(v)
@@ -161,25 +161,29 @@ class Graph:
         s = Stack()
         s.push([starting_vertex])
         visited = set()
+        the_path = []
 
         def helper(vertex):
             path = s.pop()
             v = path[-1]
-            print(f"v:{v}")
-
+            # print(f"v:{v}")
             if v not in visited:
+                # base case, but what if we don't find it?
                 if v == destination_vertex:
-                    return path
+                    # print(f"path {path}")
+                    the_path.extend(path)
                 visited.add(v)
                 for next_v in self.get_neighbors(v):
                     next_path = list(path)
                     next_path.append(next_v)
-                    print(f"next path: {next_path}")
+                    # print(f"next path: {next_path}")
                     s.push(next_path)
                     helper(next_v)
-            return path
 
-        return helper(starting_vertex)
+        helper(starting_vertex)
+
+        return the_path
+
         
                 
 
