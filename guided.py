@@ -67,7 +67,57 @@ g.add_edge(99, 3490)
 # print(g.get_neighbors(3))
 g.bft(99)
 
-dances = list(['Waltz', 'Tango', 'Viennese Waltz', 'Foxtrot', 'Cha Cha', 'Samba', 'Rumba', 'Paso Doble', 'Jive'])
-dances.sort()
-for dance in dances:
-    print(dance)
+def f(n):
+    if n == 0:
+        return 3490
+    return f(n-1)
+
+# print(f(10))
+# print(f(10000))
+
+def find_ladders(begin_word, end_word):
+    visited = set()
+    q = Queue()
+
+    q.enqueue([begin_word])
+
+    while q.size > 0:
+        path = q.dequeue()
+        v = path[-1]
+
+        if v not in visited:
+            visited.add(v)
+
+            if v == end_word:
+                return path
+
+            for neighbor in self.get_neighbors(v):
+                path_copy = list(past)
+                path_copy.append(neighbor)
+                q.enqueue(path_copy)
+import string
+with open('words.txt') as f:
+    words = f.read().split()
+
+word_set = set()
+
+for w in words:
+    word_set.add(w.lower())
+
+letters = list(string.ascii_lowercase)
+
+def get_neighbors(word):
+    neighbors = []
+
+    string_word = list(word) # ["w", "o", "r", "d"]
+
+    for i in range(len(string_word)):
+        for letter in letters:
+            temp_word = list(string_word)
+            temp_word[-1] = letter
+            w = "".join(temp_word)
+
+            if w in word_set:
+                neighbors.append(w)
+
+    return neighbors

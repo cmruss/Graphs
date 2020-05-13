@@ -118,8 +118,8 @@ class Graph:
                 # print(f"next vertex: {next_v}")
                 # _COPY_ THE PATH
                 next_path = list(path)
-                next_path.append(next_v)
                 # APPEND THE NEIGHOR TO THE BACK
+                next_path.append(next_v)
                 q.enqueue(next_path)
                 
                 
@@ -168,7 +168,7 @@ class Graph:
             v = path[-1]
             # print(f"v:{v}")
             if v not in visited:
-                # base case, but what if we don't find it?
+                # base case, we find it
                 if v == destination_vertex:
                     # print(f"path {path}")
                     the_path.extend(path)
@@ -181,9 +181,33 @@ class Graph:
                     helper(next_v)
 
         helper(starting_vertex)
-
+        # if we don't find it
+        if the_path == []:
+            return None        
         return the_path
 
+    def beejs_dfs_recursive(self, starting_vertex, destination_vertex, visited=None, path=None):
+
+        if visited is Nonoe:
+            visited = set()
+
+        if path is None:
+            path = []
+        visited.add(starting_vertex)
+
+        path = path + [starting_vertex]
+
+        if starting_vertex == destination_vertex:
+            return path
+
+        for child_vertex in self.vertices[starting_vertex]:
+            if child_vertex not in visited:
+                new_path = self.beejs_dfs_recursive(child_vertex, destination_vertex, visited, path)
+
+            if new_path:
+                return new_path
+
+        return None
         
                 
 

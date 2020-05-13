@@ -13,6 +13,24 @@ class Queue():
     def size(self):
         return len(self.queue)
 
+class Deque():
+    def __init__(self):
+        self.deque = []
+    def enqueue(self, value, parent):
+        self.deque.append(value, parent)
+    def dequeue(self):
+        if self.size() > 0:
+            return self.deque.pop(0)
+        else:
+            return None
+    def pop(self):
+        if self.size > 0:
+            return self.deque.pop()
+        else:
+            return None
+    def size(self):
+        return len(self.deque)
+
 class Stack():
     def __init__(self):
         self.stack = []
