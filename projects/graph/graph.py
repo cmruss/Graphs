@@ -52,17 +52,17 @@ class Graph:
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        s = Stack()
-        s.push(starting_vertex)
-        visited = set()
+        s = Stack() # depth first because FILO order
+        s.push(starting_vertex) # add the starting point
+        visited = set() # keep track of what we've traversed
 
-        while s.size() > 0:
-            v = s.pop()
-            if v not in visited:
+        while s.size() > 0: # while we're still pushing to the stack
+            v = s.pop() # take the last vertex added
+            if v not in visited: # if we've already traversed it, let it go
                 print(v)
-                visited.add(v)
-                for next_v in self.get_neighbors(v):
-                    s.push(next_v)
+                visited.add(v) # add the vertex to visited
+                for next_v in self.get_neighbors(v): # call get neighbors to loop through
+                    s.push(next_v) # and add connected vertices to the stack
    
     def dft_recursive(self, starting_vertex):
         """
@@ -74,16 +74,16 @@ class Graph:
         s = Stack()
         visited = set()
 
-        def helper(vertex):
-            s.push(vertex)
-            v = s.pop()
-            if v not in visited:
+        def helper(vertex): # nested reecursive function takes a vertex
+            s.push(vertex) # adds it to the stack 
+            v = s.pop() # pulls the last vertex added from the stack
+            if v not in visited: # checks if we've traversed it already
                 print(v)
-                visited.add(v)
-                for next_v in self.get_neighbors(v):
-                    helper(next_v)
+                visited.add(v) # if not, add it to the set in parents scope
+                for next_v in self.get_neighbors(v): # loop through the connected vertices
+                    helper(next_v) # and call the functon on them 
 
-        helper(starting_vertex)
+        helper(starting_vertex) # call the recursive function on the first vertex
         
 
     def bfs(self, starting_vertex, destination_vertex):
@@ -209,6 +209,29 @@ class Graph:
 
         return None
         
+    def beejs_earliest_ancestor(self, ancestors, starting_vertex):
+        for pair in ancestors:
+            self.add_vertex(pair[0])
+            self.add_vertex(pair[1])
+            self.add_edge(pair[1], pair[0])
+
+        q = Queue()
+        q.enqueue([starting_vertex])
+        max_path_len = 1
+        earliest_ancestor = -1
+
+        while q.size > 0:
+            path = q.dequeue()
+            v = path[-1]
+            if (len(path) >= max_path_len and v < earliest_ancestor) or (len(path) > max_path_len):
+                earliest_ancestor = v
+                max_path_len = len(path)
+
+            for neighbor in self.vertices[v]:
+                path_copy = list(path)
+                path_copy.append(neighbor)
+                q.enqueue(path_copy)
+        return earliest_ancestor
                 
 
 if __name__ == '__main__':

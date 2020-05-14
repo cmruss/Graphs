@@ -13,11 +13,11 @@ def earliest_ancestor(ancestors, starting_node):
     q = Queue()
     # add the stating node to the queue
     q.enqueue([starting_node])
-    # create a visited set to 
     # keep track of where we've been
     visited = set()
-    # until there's no nodes added to the queue
+    # list of paths we've taken tracing the ancestors
     paths = list()
+    # until there's no nodes added to the queue
     while q.size() > 0:
         # grab the first path in the queue
         path = q.dequeue()
@@ -51,15 +51,13 @@ def earliest_ancestor(ancestors, starting_node):
     elif len(paths) > 1:
         # grab the last path
         last_path = paths[-1]
-        print(last_path)
         # compare it to the other paths
         for path in paths:
-            print(path)
             # if any path is as long as the last and it's final node is less
             if len(path) == len(last_path) and path[-1] < last_path[-1]:
                 # make it the node
                 node = path[-1]
-                print(node)
+                # print(node)
         return node
     else: # return the furthest ancestor
         # print(node)
@@ -99,3 +97,4 @@ def earliest_ancestor(ancestors, starting_node):
 # print(graph.earliest_ancestor(ancestors, 9), 4) 
 # print(graph.earliest_ancestor(ancestors, 10), -1)
 # print(graph.earliest_ancestor(ancestors, 11), -1)
+
